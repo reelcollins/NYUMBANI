@@ -183,7 +183,6 @@ else:
     AWS_DEFAULT_ACL = 'public-read'
     AWS_LOCATION = 'static'
     AWS_MEDIA_LOCATION = 'media'
-    
     AWS_S3_CUSTOM_DOMAIN = getenv('AWS_S3_CUSTOM_DOMAIN')
     STORAGES = {
         'default': {'BACKEND': 'custom_storages.CustomS3Boto3Storage'},
@@ -223,8 +222,7 @@ DJOSER = {
 }
 
 AUTH_COOKIE = 'access'
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5
-AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24
+AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
 AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'True')  == 'True'
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'
