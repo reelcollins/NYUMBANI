@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
+import os
+from datetime import timedelta
 import sys
 import dj_database_url
 
@@ -53,12 +56,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'rest_framework',
     'corsheaders',
     'djoser',
     'storages',
     'social_django',
     'users',
+    'listing',
 
 
 
@@ -110,8 +115,11 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     if getenv("DATABASE_URL", None) is None:
         raise Exception("DATABASE_URL environment variable not defined")
     DATABASES = {
-        "default": dj_database_url.parse(getenv("DATABASE_URL")),
+        "users": dj_database_url.parse(getenv("DATABASE_URL")),
+        "listings": dj_database_url.parse(getenv("DATABASE_URL2")),
     }
+
+DATABASE_ROUTERS = ['user.router.AuthRouter', 'listing.router.ListingRouter']
 
 # Email Settings
 

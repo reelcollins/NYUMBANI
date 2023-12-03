@@ -24,6 +24,15 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
+    
+    def create_realtor(self, email, name, password=None):
+        user = self.create_user(email, name, password)
+        
+        user.is_realtor = True
+        user.save(using=self._db)
+
+        return user
+
 
     def create_superuser(self, email, password=None, **kwargs):
         user = self.create_user(
