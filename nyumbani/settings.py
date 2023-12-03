@@ -115,7 +115,7 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     if getenv("DATABASE_URL", None) is None:
         raise Exception("DATABASE_URL environment variable not defined")
     DATABASES = {
-        "users": dj_database_url.parse(getenv("DATABASE_URL")),
+        "default": dj_database_url.parse(getenv("DATABASE_URL")),
         "listings": dj_database_url.parse(getenv("DATABASE_URL2")),
     }
 

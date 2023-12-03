@@ -5,7 +5,7 @@ from listing.extras import delete_realtors_listing_data
 
 
 class UserAdmin(admin.ModelAdmin):
-    using = 'users'
+    using = 'default'
     list_display = ('id', 'first_name', 'last_name', 'email', )
     list_display_links = ('id', 'first_name', 'last_name', 'email', )
     search_fields = ('first_name', 'email', )
