@@ -188,8 +188,8 @@ class RegisterView(APIView):
 class RetrieveUserView(APIView):
     def get(self, request, format=None):
         try:
-            user = request.user
-            user = UserSerializer(user)
+            user = request.User
+            user = UserSerializer(User)
 
             return Response(
                 {'user': user.data},
