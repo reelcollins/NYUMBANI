@@ -1,7 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
-User = get_user_model()
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
 from listing.extras import delete_realtors_listing_data
+
+from .models import UserAccount
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -28,4 +30,4 @@ class UserAdmin(admin.ModelAdmin):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         return super().formfield_for_manytomany(db_field, request, using=self.using, **kwargs)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(UserAccount, UserAdmin)

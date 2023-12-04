@@ -135,7 +135,8 @@ class RegisterView(APIView):
         try:
             data = request.data
 
-            name = data['name']
+            name = data['first_name']
+            name = data['last_name']
             email = data['email']
             email = email.lower()
             password = data['password']
@@ -188,8 +189,8 @@ class RegisterView(APIView):
 class RetrieveUserView(APIView):
     def get(self, request, format=None):
         try:
-            user = request.User
-            user = UserSerializer(User)
+            user = request.user
+            user = UserSerializer(user)
 
             return Response(
                 {'user': user.data},
