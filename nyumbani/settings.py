@@ -116,7 +116,7 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
         raise Exception("DATABASE_URL environment variable not defined")
     DATABASES = {
         "default": dj_database_url.parse(getenv("DATABASE_URL")),
-        "listings": dj_database_url.parse(getenv("DATABASE_URL2")),
+        # "listings": dj_database_url.parse(getenv("DATABASE_URL2")),
     }
 
 DATABASE_ROUTERS = ['user.router.AuthRouter', 'listing.router.ListingRouter']
