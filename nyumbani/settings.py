@@ -44,8 +44,11 @@ SECRET_KEY = getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS",
-                       "127.0.0.1,localhost").split(",")
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.vercel.app', '.now.sh']
+
+# ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS",
+#                        "127.0.0.1,localhost").split(",")
 
 # Application definition
 
@@ -103,23 +106,35 @@ WSGI_APPLICATION = 'nyumbani.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-if DEVELOPMENT_MODE is True:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
 
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if getenv("DATABASE_URL", None) is None:
-        raise Exception("DATABASE_URL environment variable not defined")
-    DATABASES = {
-        "default": dj_database_url.parse(getenv("DATABASE_URL")),
-        # "listings": dj_database_url.parse(getenv("DATABASE_URL2")),
-    }
 
-DATABASE_ROUTERS = ['user.router.AuthRouter', 'listing.router.ListingRouter']
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+}
+
+
+
+
+# if DEVELOPMENT_MODE is True:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+
+# elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+#     if getenv("DATABASE_URL", None) is None:
+#         raise Exception("DATABASE_URL environment variable not defined")
+#     DATABASES = {
+#         "default": dj_database_url.parse(getenv("DATABASE_URL")),
+#         # "listings": dj_database_url.parse(getenv("DATABASE_URL2")),
+#     }
+
+# DATABASE_ROUTERS = ['user.router.AuthRouter', 'listing.router.ListingRouter']
 
 # Email Settings
 
@@ -173,29 +188,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-if DEVELOPMENT_MODE is True:
-    STATIC_URL = 'static/'
-    STATIC_ROOT = BASE_DIR / 'static'
-    MEDIA_URL = 'media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-else:
-    AWS_S3_ACCESS_KEY_ID = getenv('AWS_S3_ACCESS_KEY_ID')
-    AWS_S3_SECRET_ACCESS_KEY = getenv('AWS_S3_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = getenv('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = getenv('AWS_S3_REGION_NAME')
-    AWS_S3_ENDPOINT_URL = f'https://{AWS_S3_REGION_NAME}.digitaloceanspaces.com'
-    AWS_S3_OBJECT_PARAMETERS = {
-        'CacheControl': 'max-age=86400'
-    }
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_LOCATION = 'static'
-    AWS_MEDIA_LOCATION = 'media'
-    AWS_S3_CUSTOM_DOMAIN = getenv('AWS_S3_CUSTOM_DOMAIN')
-    STORAGES = {
-        'default': {'BACKEND': 'custom_storages.CustomS3Boto3Storage'},
-        'staticfiles': {'BACKEND': 'storages.backends.s3boto3.S3StaticStorage'}
-    }
+
+# if DEVELOPMENT_MODE is True:
+#     STATIC_URL = 'static/'
+#     STATIC_ROOT = BASE_DIR / 'static'
+#     MEDIA_URL = 'media/'
+#     MEDIA_ROOT = BASE_DIR / 'media'
+
+# else:
+#     AWS_S3_ACCESS_KEY_ID = getenv('AWS_S3_ACCESS_KEY_ID')
+#     AWS_S3_SECRET_ACCESS_KEY = getenv('AWS_S3_SECRET_ACCESS_KEY')
+#     AWS_STORAGE_BUCKET_NAME = getenv('AWS_STORAGE_BUCKET_NAME')
+#     AWS_S3_REGION_NAME = getenv('AWS_S3_REGION_NAME')
+#     AWS_S3_ENDPOINT_URL = f'https://{AWS_S3_REGION_NAME}.digitaloceanspaces.com'
+#     AWS_S3_OBJECT_PARAMETERS = {
+#         'CacheControl': 'max-age=86400'
+#     }
+#     AWS_DEFAULT_ACL = 'public-read'
+#     AWS_LOCATION = 'static'
+#     AWS_MEDIA_LOCATION = 'media'
+#     AWS_S3_CUSTOM_DOMAIN = getenv('AWS_S3_CUSTOM_DOMAIN')
+#     STORAGES = {
+#         'default': {'BACKEND': 'custom_storages.CustomS3Boto3Storage'},
+#         'staticfiles': {'BACKEND': 'storages.backends.s3boto3.S3StaticStorage'}
+#     }
 
 
 
