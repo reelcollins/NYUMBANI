@@ -5,8 +5,8 @@ from .views import(
     CustomTokenRefreshView,
     CustomTokenVerifyView,
     LogoutView,
-    RegisterView,
-    RetrieveUserView,
+    # RegisterView,
+    # RetrieveUserView,
 )
 
 
